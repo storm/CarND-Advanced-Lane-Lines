@@ -21,8 +21,7 @@ The goals / steps of this project are the following:
 [sample_unwarped]: ./writeup_images/sample_unwarped.png "Sample Unwarped"
 [sliding_window_search]: ./writeup_images/sliding_window_search.png "Sliding Window Search"
 [sliding_window_histogram]: ./writeup_images/sliding_window_histogram.png "Sliding Window Historgram"
-[sample_unwarped]: ./writeup_images/sample_unwarped.png "Sample Unwarped"
-[video1]: ./project_video.mp4 "Video"
+[sample_processed]: ./writeup_images/sample_processed.png "Sample Processed"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
@@ -106,9 +105,9 @@ With the assumption that the camera is center-mounted on the car I calculate the
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I used polyfill and polylines
+ I create a polygon from the left and then right lane which I then warp back into the original perspective with the inverse matrix.
 
-![alt text][image6]
+![Sample Processed][sample_processed]
 
 ---
 
@@ -116,7 +115,7 @@ I used polyfill and polylines
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result.](./project_video_output.mp4)
 
 ---
 
@@ -124,4 +123,7 @@ Here's a [link to my video result](./project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+It seems like lighting and therefore visibility of the lane markings are a big challenge. For the sample video the color spaces and thresholds I picked worked better than Sobel gradient filter, however, I had less success in the challenge videos.
+I keep the previous frame's polyfit and re-use it which helps avoiding errors and improves smoothness.
+It would probably be best to pick color spaces, channels and filters dynamically based on lighting conditions.
+One could also add checks to prevent errors like comparing the angles of both lines, making sure the lines never intersect and always have a certain spacing.
